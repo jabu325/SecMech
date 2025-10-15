@@ -1,0 +1,212 @@
+		body{
+			background: black;
+		   font-family: monospace, sans-serif;
+      font-weight: bold;
+      color: white;
+}
+
+hr{
+	width: 100%;
+}
+		nav div label{
+			border: 1px solid white;
+		}
+nav div label h3{
+				padding: 15px;
+			margin: 0;
+}
+nav div{
+	border: 1px solid red;
+	width: 350px;
+	position: fixed;
+	height: 100%;
+	  top: 10px;
+	left: 0;
+	overflow-y: auto;
+	background: black;
+	z-index: 9999;
+	opacity: 1;
+	padding: 0;
+
+}
+nav div ul{
+	margin: 0px;
+}
+nav div ul li{
+	list-style: none;
+	border: 1px solid white;
+	padding: 15px;
+	text-align: left;
+	margin-left: -40px;
+	text-align: center;
+	text-decoration: none;
+}
+nav div ul li:hover {
+	background: red;
+}
+nav div ul a{
+	text-decoration: none;
+	font-size: 20px;
+	color: white;
+}
+nav{
+  background: #151719;
+  top: 0;
+  position: relative;
+  margin-top: -20px;
+  width: 100%;
+  margin: 0;
+  padding:0;
+  text-align: left;
+  border: 1px solid grey;
+}
+nav ul{
+	align-items: center;
+	
+}
+nav #btn{
+  margin-top: 20px;
+  font-size: 30px;
+  margin-left: 20px;
+  position: absolute;
+  padding: 0;
+}
+
+nav #btn2{
+  margin-top: 20px;
+  font-size: 30px;
+  right: 20px;
+  position: absolute;
+  padding: 0;
+}
+
+nav i:hover {
+  cursor: pointer;
+}
+
+nav label{
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+/* sub menu */
+
+		body section{
+			display: flex;
+			margin-top: 40px;
+			
+
+
+		}
+		section{
+			border:;
+			margin: 0;
+			padding: 0;
+			
+			
+		}
+		section div{
+			width: 50%;
+			border: 1px solid white;
+			background: #151719;
+			border-radius: 20px;
+			width: 500px;
+			margin-left: 100px;
+			justify-content: center;
+			display: flex;
+		}
+		section #col-1{
+			display:;
+		}
+		button{
+			color: white;
+			background: #151719;
+			padding: 70px 45px;
+			border-radius: 100%;
+		}
+		table{
+			text-align: center;
+			margin: 0;
+			padding: 0;
+					}
+		table tr{
+			margin: 0;
+			padding: 0;
+			
+		}
+		table tr td{
+			padding: 10px 30px;
+			border: 1px solid white;
+			background: #151719;
+		}
+		.heading{
+			width: 100px;
+			
+		}
+		.report div{
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			flex-direction: column;
+			text-align: center;
+
+		}
+video{
+	display: flex;
+	justify-content: center;
+
+}
+		audio{
+			
+			padding: 0;
+
+		}
+		video{
+			
+			padding: 0;
+		}
+	.sec-mech{
+		padding: 20px 0px;
+	}
+	#table-nav{
+		margin: 0;
+		
+	}
+	#table-nav button{
+		padding: 0;
+		margin: 0;
+		border-radius: 0;
+		padding: 10px 10px;
+		background: orange;
+		font-weight: bold;
+		border-radius: 20px;
+		display: flex;
+		
+		
+	}
+		@media only screen and (max-width: 900px){
+			body section{
+			display: block;
+			margin-top: 60px;
+			
+
+
+		}
+		section div{
+			justify-content: center;
+			display: flex;
+			margin: 0;
+			/*padding-top: 40px;*/
+			margin-top: 40px;
+			margin-left: ;
+			width: 100%;
+			align-items: center;
+			padding:;
+		}
+		.report{
+			display:;
+		}
+		.live-video{
+
+		}
+		

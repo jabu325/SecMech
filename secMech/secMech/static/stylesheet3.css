@@ -1,0 +1,123 @@
+
+    body{
+      background: #121212;
+      color: white;
+      font-family: monospace, sans-serif;
+      font-weight: bold;
+    }
+
+ /* sub menu */
+#sub-menu{
+     color: white;
+      background: #151719;
+      margin-left: -25px;
+      margin-top: 30px;
+    }
+    nav div ul{
+      list-style: none;
+      display: none;
+      width: 285px;
+      /*border: 1px solid blue;*/
+      opacity: 5;
+      padding: 0;
+      margin-top: -30px;
+      margin-left: 0px;
+    }
+    nav div ul li{
+      background: none;
+      padding: 15px 15px;
+      border: 1px solid white;
+      list-style: none;
+      
+    }
+    nav div ul li a{
+      font-size: 20px;
+      color: white;
+      text-decoration: none;
+      list-style: none;
+      background: none;
+
+    }
+
+nav i:hover > div ul {
+  display: block;
+  cursor: pointer;
+}
+
+#sub-menu ul li:hover {
+  background: yellow;
+}
+
+nav{
+  background: #151719;
+  width: 100%;
+  margin-top: 0;
+  text-align: left;
+  border: 1px solid grey;
+}
+
+nav i{
+  margin-top: 20px;
+  font-size: 30px;
+  margin-left: 20px;
+  position: absolute;
+  padding: 0;
+}
+
+nav i:hover {
+  cursor: pointer;
+}
+
+nav label{
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+/* sub menu */
+section{
+  /*border: 1px solid green;*/
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  padding: 0;
+  margin: 0;
+}
+section div{
+      margin-top: 70px;
+      border: 1px solid orange;
+      background: black;
+      width: 400px;
+      border-radius: 20px;
+      text-align: center;
+      display: block;
+    }
+
+section div input{
+  text-align: center;
+  display: flex;
+  margin-top: 20px;
+  color: blue;
+  width: 50%;
+  margin-left: 20px;
+  padding: 10px 15px;
+  font-family: monospace, sans-serif;
+  font-size: 15px;
+  font-weight: bold;
+}
+button{
+      color: white;
+      background: #151719;
+      padding: 15px 15px;
+      border-radius: 10px;
+    }
+button:hover {
+  cursor: pointer;
+}
+@media only screen and (max-width: 800px){
+     html{
+      padding: 1rem;
+    }
+    section div{
+            margin-top: 90px;
+    }
+}

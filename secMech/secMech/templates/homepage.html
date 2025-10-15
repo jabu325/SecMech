@@ -1,0 +1,77 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	  <link rel="stylesheet" href="{% static 'fontawesome-free-5.15.2-web/css/all.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'stylesheet3.css' %}">
+  <link rel="manifest" href="{% static 'manifest.json' %}">
+<meta name="theme-color" content="#000">
+
+	<title>User Authentication</title>
+	<style>
+    #armButton {
+      background-color: red;
+      color: white;
+      transition: background-color 0.3s ease;
+    }
+    #armButton.disarmed {
+      background-color: green;
+    }
+    #statusText {
+      text-align: center;
+      font-weight: bold;
+      font-size: 20px;
+      padding: 10px;
+    }
+    nav div{
+      margin-left: -400px;
+    }
+    .list-icons i{
+      color: yellow;
+    }
+  </style>
+</head>
+<body>
+	<nav>
+    
+    <label><h2>Burglar Alarm System</h2></label>
+  </nav>
+
+  <section>
+		<div id="col-1">
+			<label>
+				<h3>User Authentication<hr></h3>
+			</label>
+  <form method="POST" action="">
+
+
+  {% csrf_token %}
+  <section>
+    <i class='fas fa-user' style="padding: 0; margin: 0; font-size: 30px; margin-top: 15px;"></i>
+    <input type="text" name="username" placeholder="User Name" required>
+  </section>
+  <section>
+    <i class='fas fa-lock' style="padding: 0; margin: 0; font-size: 30px; margin-top: 15px;"></i>
+    <input type="password" name="password" placeholder="Password" required>
+  </section>
+  <br>
+  <button type="submit">Submit</button>
+</form>
+</div>
+</section>
+	{% if alert %}
+<script>
+    alert("Invalid username or password!");
+</script>
+{% endif %}
+ <script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("{% static 'service-worker.js' %}")
+    .then((reg) => console.log("Service Worker registered:", reg))
+    .catch((err) => console.log("Service Worker failed:", err));
+}
+</script>
+</body>
+</html>

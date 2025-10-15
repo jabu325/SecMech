@@ -1,0 +1,14 @@
+1. change the background color of the auth_page and index to black (ios screen stretch problem)
+
+2. fix the timestamp string problem so the dates align in the tables instead of the web part coming first
+
+3. add a refresh button to the page or make the telegram application inform the user when someone has accessed the system (option should be toggled from the web interface e.g "what kind of alerts do you wish to receive (motion[], access)")
+- create the telegram alert feature first
+- add a notification panel in the app that shows all alerts..., make it visible on pc unless hide button is make it a nav menu kind of thing for mobile.
+
+4. add a download button to the page which sends the user to another page where all intrusions are listed in static format. input fields e.g index/date/method..., which enables users to find previous or old reports
+- these can also act as backups, in a case where we decide to add a clear history button (backups are permanent lol)
+
+5. implement 2 step authentication using telegram
+
+6. survellance with microphone

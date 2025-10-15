@@ -1,0 +1,289 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Notifications</title>
+  <link rel="stylesheet" href="{% static 'stylesheet2.css' %}">
+  <link rel="stylesheet" href="{% static 'fontawesome-free-5.15.2-web/css/all.css' %}">
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<style>
+    #armButton {
+      background-color: red;
+    display: none;
+      color: white;
+      transition: background-color 0.3s ease;
+    }
+    #armButton.disarmed {
+      background-color: green;
+    }
+    #statusText {
+      text-align: center;
+      font-weight: bold;
+      font-size: 20px;
+      padding: 10px;
+    }
+    nav div{
+      margin-left: -400px;
+    }
+    .list-icons i{
+      color: yellow;
+    }
+    .sec-mech {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  
+}
+
+#armButton {
+  border: none;
+  cursor: pointer;
+   border: none;
+}
+
+
+.intrusions td {
+  padding: 10px;
+  text-align: center;
+}
+table{
+  overflow-x: auto; 
+}
+  </style>
+</head>
+<body>
+  <script>
+    alert("Mobile users: Tilt the screen for better view");
+  </script>
+    <nav>
+    <i class="fas fa-bars" id="btn" onclick=""></i>
+      <div id="sub-menu">
+        <label style="background: red;">
+          <h2>Menu</h2>
+          <i class="fas fa-times" id="btn2" onclick=""></i>
+        </label>
+
+        <ul style="text-align: center;" class="list-icons">
+
+          <a href="index"><li><i class="fas fa-home" id=""></i> Homepage</li></a>
+          <a href="report"><li><i class="fas fa-stream"></i> Report</li></a>
+          <a href="notification"><li><i class="fas fa-bell" id=""></i> Notifications</li></a>
+          <a href="subpages/Temp.html"><li><i class="fas fa-bullhorn" id=""></i> Alarm System</li></a>
+           <a href="{% url 'logout' %}"><li><i class="fas fa-user" id=""></i> Logout</li></a>
+        </ul>
+      </div>
+    </i>
+    <label><h2>REPORTS</h2></label>
+  </nav>
+  <button id="armButton">Loading...</button>
+<!--
+  <section>
+    <div id="col-1" class="sec-mech">
+      <span id="statusText">Loading...</span> 
+      
+    </div>
+
+    <div id="col-1">
+      <br />
+      <table class="intrusions">
+        <thead>
+          <tr>
+            <td>Index</td>
+            <td>Time & Date</td>
+            <td>Footage</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td colspan="3" style="text-align:center;">No data</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+-->
+  <br />
+
+  <section class="report">
+    <div id="live-video">
+      <img src="http://192.168.43.1:8080/video" alt="Live Security Camera Feed" width="480" height="430">
+        
+
+     <br />
+      <audio src="http://192.168.43.1:8080/audio.wav" controls></audio>
+    </div>
+
+    <div id="col-2" style="overflow-x: auto; max-width: 100%;">
+      <table id="logTable" class="intrusions">
+        <thead>
+          <td colspan="100%" style="background: red;">Access Report</td>
+          <tr>
+            <td style="background: red;">Index</td>
+            <td style="background: red;">Date</td>
+            <td style="background: red;">Time</td>
+            <td style="background: red;">Action</td>
+            <td style="background: red;">Method</td>
+            <td style="background: red;">Footage</td>
+          </tr>
+        </thead>
+        <tbody id="logBody"></tbody>
+      </table>
+      <div id='table-nav' style="text-align:center; margin-top: 10px;">
+        <button id="prevPage"><- Previous</button>
+        <span id="pageIndicator">Page 1</span>
+        <button id="nextPage">Next -></button>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // 🔐 Firebase config
+    const firebaseConfig = {
+      apiKey: "AIzaSyDSjW0Y0Dnt0sr0fJHd9AZ5O25z_k8hx2Y",
+      authDomain: "lightbulb-ef4f6.firebaseapp.com",
+      databaseURL: "https://lightbulb-ef4f6-default-rtdb.firebaseio.com",
+      projectId: "lightbulb-ef4f6",
+      storageBucket: "lightbulb-ef4f6.firebasestorage.app",
+      messagingSenderId: "959447705364",
+      appId: "1:959447705364:web:3692367ed8c54653638401",
+      measurementId: "G-9E2PH1L39F"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    const armButton = document.getElementById("armButton");
+    const statusText = document.getElementById("statusText");
+
+    // ==== UI Update Function ====
+    function updateUI(isArmed) {
+      if (isArmed) {
+        armButton.textContent = "Disarm System";
+        armButton.classList.remove("disarmed");
+        statusText.textContent = "System is ARMED";
+        statusText.style.color = "#f44336";
+      } else {
+        armButton.textContent = "Arm System";
+        armButton.classList.add("disarmed");
+        statusText.textContent = "System is DISARMED";
+        statusText.style.color = "#4CAF50";
+      }
+    }
+
+    // ✅ Real-time listener to /armed
+    db.ref("/armed").on("value", (snapshot) => {
+      updateUI(snapshot.val());
+    });
+
+    // ✅ Arm Button toggle
+    armButton.addEventListener("click", () => {
+      db.ref("/armed").once("value").then((snap) => {
+        const current = snap.val();
+        const newStatus = !current;
+
+        db.ref("/armed").set(newStatus);
+        db.ref("log/status").set(newStatus);  // Removed "/log/status"
+
+        const now = new Date();
+        const date = now.toISOString().split("T")[0];
+        const time = now.toTimeString().split(" ")[0];
+        const timestamp = now.getTime();
+
+        const newLogRef = db.ref("/log").push();  // ✅ logs node only
+        newLogRef.set({
+          date: date,
+          time: time,
+          status: newStatus,
+          method: "Web",
+          footage: "null",
+          timestamp: timestamp
+        });
+      });
+    });
+
+    // ==== Logs with Pagination ====
+    const logBody = document.getElementById("logBody");
+    const prevBtn = document.getElementById("prevPage");
+    const nextBtn = document.getElementById("nextPage");
+    const pageIndicator = document.getElementById("pageIndicator");
+
+    let logs = [];
+    let currentPage = 1;
+    const logsPerPage = 5;
+
+    function displayPage(page) {
+      logBody.innerHTML = "";
+      const start = (page - 1) * logsPerPage;
+      const end = start + logsPerPage;
+      const pageLogs = logs.slice(start, end);
+
+      pageLogs.forEach((log, index) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${start + index + 1}</td>
+          <td>${log.date || "-"}</td>
+          <td>${log.time || "-"}</td>
+          <td>${log.status ? "Armed" : "Disarmed"}</td>
+          <td>${log.method || "-"}</td>
+          <td>${(log.footage && log.footage !== "null") ? log.footage : "None"}</td>
+        `;
+        logBody.appendChild(row);
+      });
+
+      pageIndicator.textContent = `Page ${currentPage}`;
+      prevBtn.disabled = currentPage === 1;
+      nextBtn.disabled = end >= logs.length;
+    }
+
+ function loadLogs() {
+  // Real-time listener
+  db.ref("/logs").orderByKey().limitToLast(50).on("value", (snapshot) => {
+    const previousPage = currentPage;  // Keep current page
+    logs = [];
+
+    snapshot.forEach((childSnapshot) => {
+      logs.push(childSnapshot.val());
+    });
+
+    logs.reverse(); // Newest first
+
+    // Ensure currentPage is valid
+    currentPage = Math.min(previousPage, Math.ceil(logs.length / logsPerPage) || 1);
+
+    displayPage(currentPage);
+  });
+}
+    prevBtn.addEventListener("click", () => {
+      if (currentPage > 1) {
+        currentPage--;
+        displayPage(currentPage);
+      }
+    });
+
+    nextBtn.addEventListener("click", () => {
+      if ((currentPage * logsPerPage) < logs.length) {
+        currentPage++;
+        displayPage(currentPage);
+      }
+    });
+
+
+    loadLogs();
+  </script>
+    <script>
+   document.getElementById("btn").addEventListener("click", function () {
+    const sidebar = document.getElementById("sub-menu");
+    sidebar.style.marginLeft= 0 + "px";
+    sidebar.style.transition= 0.9 + "s";
+   })
+
+   document.getElementById("btn2").addEventListener("click", function () {
+    const sidebar = document.getElementById("sub-menu");
+    sidebar.style.marginLeft= -400 + "px";
+   })
+  </script>
+</body>
+</html>
